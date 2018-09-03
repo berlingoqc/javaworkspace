@@ -51,6 +51,7 @@
                           <Component id="btnCp" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnMV" alignment="0" max="32767" attributes="0"/>
                           <Component id="btnRm" alignment="0" max="32767" attributes="0"/>
+                          <Component id="btnCAT" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
                   </Group>
@@ -77,6 +78,8 @@
                       <Component id="btnCp" min="-2" max="-2" attributes="0"/>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Component id="btnMV" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="btnCAT" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <Component id="jScrollPane2" min="-2" pref="311" max="-2" attributes="0"/>
               </Group>
@@ -131,10 +134,10 @@
         <Component class="javax.swing.JTable" name="tableFiles">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="3" rowCount="18">
+              <Table columnCount="3" rowCount="13">
+                <Column editable="true" title="Select" type="java.lang.Boolean"/>
                 <Column editable="false" title="Type" type="java.lang.Object"/>
                 <Column editable="true" title="Name" type="java.lang.Object"/>
-                <Column editable="false" title="Size" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
@@ -144,12 +147,12 @@
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                   <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
-                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
+                <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                   <Title/>
                   <Editor/>
                   <Renderer/>
@@ -177,6 +180,14 @@
       </Properties>
       <Events>
         <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCDMouseReleased"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JButton" name="btnCAT">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="CAT"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCATMouseReleased"/>
       </Events>
     </Component>
   </SubComponents>

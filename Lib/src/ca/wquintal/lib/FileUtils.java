@@ -29,7 +29,7 @@ public class FileUtils {
 
 	public class OnIoException {
 
-		public void OnIoException(IOException e) {
+		public void IoException(IOException e) {
 			System.out.print("IOException : " + e.getLocalizedMessage());
 		}
 	}
@@ -37,6 +37,16 @@ public class FileUtils {
 	public static Boolean IsDirectoryValid(String path) {
 		File f = new File(path);
 		return f.isDirectory();
+	}
+
+	public static String FileContent(String file) throws IOException {
+		StringBuilder b = new StringBuilder();
+		BufferedReader br = new BufferedReader(new FileReader(file));
+		String readLine;
+		while ((readLine = br.readLine()) != null) {
+			b.append(readLine);
+		}
+		return b.toString();
 	}
 
 	public enum FileType {
@@ -207,6 +217,21 @@ public class FileUtils {
 			}
 		}
 		return listString.toArray(new String[0]);
+	}
+	
+	public String GetContentFile(String file) {
+		File f = new File(mRootDirectory,file);
+		StringBuilder b = new StringBuilder();
+		try {
+		BufferedReader br = new BufferedReader(new FileReader(f));
+		String readLine;
+		while ((readLine = br.readLine()) != null) {
+			b.append(readLine);
+		}
+		} catch(Exception e) {
+			return "";
+		}
+		return b.toString();
 	}
 
 	public Boolean WriteLineFile(String file, String line) {

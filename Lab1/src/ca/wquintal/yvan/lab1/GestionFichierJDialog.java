@@ -9,13 +9,16 @@ import ca.wquintal.lib.FileUtils;
 import java.awt.event.WindowAdapter;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
@@ -26,6 +29,7 @@ public class GestionFichierJDialog extends javax.swing.JDialog {
 
         private String m_Username;
         private FileUtils m_FileUtils;
+	
 	
 	private String[] columnNames = {
 		"Type",
@@ -42,7 +46,7 @@ public class GestionFichierJDialog extends javax.swing.JDialog {
         m_FileUtils = new FileUtils();
 	// set le rootdirectory
 	txtRootDirectory.setText(m_FileUtils.getmRootDirectory());
-	
+
 	tableFiles.setCellSelectionEnabled(true);
 	ListSelectionModel cellSelectionModel = tableFiles.getSelectionModel();
 	cellSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
@@ -77,14 +81,14 @@ public class GestionFichierJDialog extends javax.swing.JDialog {
 		    String type = "f";
 		    if(f.isDirectory())
 			type = "d";
-		    Object[] o = { type, f.getName(), f.getTotalSpace()};
-		    model.setValueAt(false,i,0);
+		    Object[] o = new Object[] { false, type, f.getName() };
+		    model.setValueAt(false, i, 0);
 		    model.setValueAt(type, i, 1);
-		    model.setValueAt(f.getName(),i, 2);
-		    model.setValueAt(f.getTotalSpace(), i, 3);
-		    
+		    model.setValueAt(f.getName(), i, 2);
 		    i++;
 	    }
+	    
+	    
     }
 
     private String[] GetSelectedFiles() {
@@ -119,6 +123,7 @@ public class GestionFichierJDialog extends javax.swing.JDialog {
                 tableFiles = new javax.swing.JTable();
                 btnMV = new javax.swing.JButton();
                 btnCD = new javax.swing.JButton();
+                btnCAT = new javax.swing.JButton();
 
                 jToolBar1.setRollover(true);
 
@@ -168,20 +173,22 @@ public class GestionFichierJDialog extends javax.swing.JDialog {
                                 {null, null, null},
                                 {null, null, null},
                                 {null, null, null},
-                                {null, null, null},
-                                {null, null, null},
-                                {null, null, null},
-                                {null, null, null},
-                                {null, null, null},
                                 {null, null, null}
                         },
                         new String [] {
-                                "Type", "Name", "Size"
+                                "Select", "Type", "Name"
                         }
                 ) {
-                        boolean[] canEdit = new boolean [] {
-                                false, true, false
+                        Class[] types = new Class [] {
+                                java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class
                         };
+                        boolean[] canEdit = new boolean [] {
+                                true, false, true
+                        };
+
+                        public Class getColumnClass(int columnIndex) {
+                                return types [columnIndex];
+                        }
 
                         public boolean isCellEditable(int rowIndex, int columnIndex) {
                                 return canEdit [columnIndex];
@@ -190,7 +197,7 @@ public class GestionFichierJDialog extends javax.swing.JDialog {
                 jScrollPane2.setViewportView(tableFiles);
                 if (tableFiles.getColumnModel().getColumnCount() > 0) {
                         tableFiles.getColumnModel().getColumn(0).setResizable(false);
-                        tableFiles.getColumnModel().getColumn(2).setResizable(false);
+                        tableFiles.getColumnModel().getColumn(1).setResizable(false);
                 }
 
                 btnMV.setText("MV");
@@ -204,6 +211,13 @@ public class GestionFichierJDialog extends javax.swing.JDialog {
                 btnCD.addMouseListener(new java.awt.event.MouseAdapter() {
                         public void mouseReleased(java.awt.event.MouseEvent evt) {
                                 btnCDMouseReleased(evt);
+                        }
+                });
+
+                btnCAT.setText("CAT");
+                btnCAT.addMouseListener(new java.awt.event.MouseAdapter() {
+                        public void mouseReleased(java.awt.event.MouseEvent evt) {
+                                btnCATMouseReleased(evt);
                         }
                 });
 
@@ -228,7 +242,8 @@ public class GestionFichierJDialog extends javax.swing.JDialog {
                                                         .addComponent(btnTouch, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(btnCp, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                         .addComponent(btnMV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(btnRm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                                        .addComponent(btnRm, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                        .addComponent(btnCAT, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                                 .addGap(52, 52, 52))))
                 );
                 layout.setVerticalGroup(
@@ -248,7 +263,9 @@ public class GestionFichierJDialog extends javax.swing.JDialog {
                                                 .addGap(18, 18, 18)
                                                 .addComponent(btnCp)
                                                 .addGap(18, 18, 18)
-                                                .addComponent(btnMV))
+                                                .addComponent(btnMV)
+                                                .addGap(18, 18, 18)
+                                                .addComponent(btnCAT))
                                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addContainerGap(34, Short.MAX_VALUE))
                 );
@@ -271,20 +288,40 @@ public class GestionFichierJDialog extends javax.swing.JDialog {
         }//GEN-LAST:event_btnCDMouseReleased
 
         private void btnRmMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRmMouseReleased
-                // TODO add your handling code here:
+		String[] files = GetSelectedFiles();
+		System.out.print(Arrays.toString(files));
+		
+		
         }//GEN-LAST:event_btnRmMouseReleased
 
         private void btnTouchMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnTouchMouseReleased
-                // TODO add your handling code here:
+                // Demande pour le nom du fichier a creer
+		String fileName = JOptionPane.showInputDialog(this,"Nom du fichier à crée ?");
+		if(m_FileUtils.CreateNewFile(fileName, false)==null) {
+			System.out.print("Error creating file "+fileName);
+		}
+		FillTable();
         }//GEN-LAST:event_btnTouchMouseReleased
 
         private void btnCpMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCpMouseReleased
                 // TODO add your handling code here:
+		String directoryName = JOptionPane.showInputDialog(this,"Nom de répertoire a copier les fichiers ?");
+		String[] files = GetSelectedFiles();
+		for(String f : files) {
+			if(!m_FileUtils.Cp(f, directoryName)) {
+				System.out.print("Could not copy to "+directoryName);
+				return;
+			}
+		}
         }//GEN-LAST:event_btnCpMouseReleased
 
         private void btnMVMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMVMouseReleased
                 // TODO add your handling code here:
         }//GEN-LAST:event_btnMVMouseReleased
+
+        private void btnCATMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCATMouseReleased
+                // TODO add your handling code here:
+        }//GEN-LAST:event_btnCATMouseReleased
 
     /**
      * @param args the command line arguments
@@ -329,6 +366,7 @@ public class GestionFichierJDialog extends javax.swing.JDialog {
     }
 
         // Variables declaration - do not modify//GEN-BEGIN:variables
+        private javax.swing.JButton btnCAT;
         private javax.swing.JButton btnCD;
         private javax.swing.JButton btnCp;
         private javax.swing.JButton btnMV;
