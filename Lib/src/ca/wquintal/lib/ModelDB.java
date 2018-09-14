@@ -1,8 +1,8 @@
-package ca.wquintal.yvan.lab2;
+package ca.wquintal.lib;
 
 import java.util.Locale;
 
-public class ModelBD {
+class ModelDB {
 
 	int	pk;
 	String	text;
@@ -10,7 +10,7 @@ public class ModelBD {
 	String	date;
 	float	numFloat;
 	
-	public ModelBD(int p, String t, int n, String d,float f) {
+	public ModelDB(int p, String t, int n, String d,float f) {
 		pk = p;
 		text = t;
 		num = n;

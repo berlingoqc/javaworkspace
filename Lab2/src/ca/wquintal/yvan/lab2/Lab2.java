@@ -18,11 +18,11 @@ public class Lab2 {
 	 * @param args the command line arguments
 	 */
 	public static void main(String[] args) {
-		ModelDB m = new ModelDB(1, "loddddlol", 0213, "1995/07/05", 0.43f);
+		ModelBD m = new ModelBD(1, "loddddlol", 0213, "1995/07/05", 0.43f);
 		try {
 			db = new Lab2BD();
-			db.AddModelBD(m,false);
-			db.AddModelBD(m,true);
+			db.AddModelDB(m,false);
+			db.AddModelDB(m,true);
 			db.UpdateModelBD(m, false);
 			m.setPk(2);
 			db.UpdateModelBD(m, true);
