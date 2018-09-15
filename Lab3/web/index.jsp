@@ -12,12 +12,24 @@
         <title>JSP Page</title>
     </head>
     <body>
+        
         <h1><a href="MaPage.html">Hello World!</a></h1>
         
         <ul>
             <li><a href="index.jsp">Home</a></li>
-            <li><a href="MaPage.html">Ajouter BD</a></li>
-            <li><a href="">List SuperTable</a></li> 
+            <li><a href="formulaire.jsp">Ajouter BD</a></li>
+            <li><a href="ajax.jsp">Ajax</a></li>
+            <%
+               Cookie[] cookies = null;
+               cookies = request.getCookies();
+               if(cookies != null) {
+                   for(Cookie c : cookies) {
+                       if(c.getName().equals("st_text")) {
+                           out.print("<li><a>"+c.getValue()+"</a></li>");
+                       }
+                   }
+               }
+            %>
         </ul>
         
     </body>

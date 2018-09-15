@@ -14,8 +14,7 @@ public class MyBD {
 
     public static final String JDBC_DRIVER = "org.mariadb.jdbc.Driver";
 
-
-
+    
     protected Connection connection;
 
 

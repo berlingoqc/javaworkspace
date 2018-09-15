@@ -27,7 +27,7 @@ public class Lab2BD extends MyBD {
 				"test", "wq", "office"));
     }
 
-    public boolean AddModelBD(ModelDB model,boolean prepare) throws SQLException {
+    public boolean AddModelBD(ModelBD model,boolean prepare) throws SQLException {
 	String insert = model.Insert();
         if(!prepare) {
 		Statement s = connection.createStatement();

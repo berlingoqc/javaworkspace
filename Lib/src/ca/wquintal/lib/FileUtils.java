@@ -261,5 +261,35 @@ public class FileUtils {
 		}
 		return true;
 	}
+        
+        
+        public static Exception WriteToFile(String file, String content) {
+                File f = new File(file);
+		FileWriter fw = null;
+		BufferedWriter bw = null;
+		PrintWriter out = null;
+		try {
+			fw = new FileWriter(f,true);
+			bw = new BufferedWriter(fw);
+			bw.write(content);
+			bw.newLine();
+			bw.flush();
+		} catch (IOException e) {
+			return e;
+		} finally {
+			try {
+				if (fw != null) {
+					fw.close();
+				}
+				if (bw != null) {
+					bw.close();
+				}
+			} catch (IOException e) {
+				// log erreur de close
+                                return e;
+                        }
+		}
+		return null;
+        }
 
 }
