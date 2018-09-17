@@ -11,16 +11,18 @@ package ca.wquintal.lib;
  */
 
     public class ConnectionInfo {
+        String driver;
         String host;
         String database;
         String user;
         String password;
 
-        public ConnectionInfo(String host,String db,String user,String password) {
+        public ConnectionInfo(String host,String db,String user,String password, String driver) {
             this.host = host;
             this.database = db;
             this.user = user;
             this.password = password;
+            this.driver = driver;
         }
 
         public String GetConnection() {
@@ -28,4 +30,5 @@ package ca.wquintal.lib;
         }
         public String GetUser() { return user;}
         public String GetPassword() { return password; }
+        public String GetDriver() { return driver; }
     }

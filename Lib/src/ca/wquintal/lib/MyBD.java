@@ -12,7 +12,9 @@ import com.sun.org.apache.xpath.internal.operations.Bool;
 
 public class MyBD {
 
-    public static final String JDBC_DRIVER = "org.mariadb.jdbc.Driver";
+    public static final String[] Drivers = new String[]{
+        "org.mariadb.jdbc.Driver"
+    };
 
     
     protected Connection connection;
@@ -20,7 +22,7 @@ public class MyBD {
 
     public MyBD(ConnectionInfo info) throws SQLException, ClassNotFoundException {
         // Load JDBC driver
-        Class.forName(JDBC_DRIVER);
+        Class.forName(info.driver);
         System.out.println("Driver loaded");
 
 	String infoConnection = info.GetConnection();
