@@ -53,7 +53,7 @@ public class SettingsDBTest {
         assertEquals(expResult, result);
         
         // Save la config
-        ConnectionInfo ci = new ConnectionInfo("localhost","website_serre","wq","office");
+        ConnectionInfo ci = new ConnectionInfo("localhost","website_serre","wq","office",MyBD.Drivers[0]);
         result = instance.SaveConfig(ci);
         assertEquals(true,result);
         

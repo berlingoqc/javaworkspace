@@ -16,7 +16,7 @@ public class MyBD {
         "org.mariadb.jdbc.Driver"
     };
 
-    
+    protected Exception  exception;
     protected Connection connection;
 
 
@@ -35,14 +35,17 @@ public class MyBD {
     public Boolean CreateTableFromFile(String file) {
         FileUtils f = new FileUtils();
 	String content = f.GetContentFile(file);
-	if (content.equals("")) return false;
+	if (content.equals("")) {
+            exception = new Exception("File content is empyu");
+            return false;
+        }
         Statement stmt;
         try {
 		stmt = connection.createStatement();
 		stmt.executeUpdate(content);
 		stmt.close();
         } catch(SQLException e) {
-            e.printStackTrace();
+            exception = e;
             return false;
         }
 
@@ -56,8 +59,12 @@ public class MyBD {
 			return true;
 		    }
 	    } catch (SQLException e) {
-		    e.printStackTrace();
+		    exception = e;
 	    }
 	    return false;
+    }
+    
+    public Exception GetLastException() {
+        return exception;
     }
 }
